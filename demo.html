@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+<meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
    pre#log{
@@ -25,16 +26,23 @@
 </head>
 <body>
 	 
-<button onclick="enrollNewProfile();">Enrol for Identification</button>
+<button onclick="enrollNewProfile();">Create Identification Profile</button>
 <button onclick="startListeningForIdentification();">Identify</button>
 <hr>
-<button onclick="enrollNewVerificationProfile();">Enrol for Verification</button>
+<button onclick="getVerificationPhrases();">List Verification phrases</button>
+<button onclick="enrollNewVerificationProfile();">Create Verification Profile</button>
 <button onclick="startListeningForVerification();">Verify</button>
+<hr>
+<button onclick="enrollNewTextIndependentVerificationProfile();">Create Text Independent Profile</button>
+<button onclick="startListeningForTextIndependentVerification();">Text Independent Verify</button>
 <hr>
 <pre id="log"></pre>
 
-<script src="speaker-recognition-api-demo-core.js"></script>
-<script src="recorder.js"></script>
+<script src="src/speaker-recognition-api-demo-core.js"></script>
+<script src="src/speaker-recognition-api-demo-verification-textdependent.js"></script>
+<script src="src/speaker-recognition-api-demo-verification-textindependent.js"></script>
+<script src="src/speaker-recognition-api-demo-identification.js"></script>
+<script src="src/recorder-cognitiveservices-rposbo.js"></script>
 <script>
 
 var recorder;
@@ -47,6 +55,10 @@ function onMediaSuccess(stream, callback, secondsOfAudio) {
     recorder.record();
     
 	setTimeout(() => { StopListening(callback); }, secondsOfAudio*1000);
+}
+
+function onMediaError(e) {
+    console.error('media error', e);
 }
 
 function StopListening(callback){
